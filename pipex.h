@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 18:28:26 by amaroni           #+#    #+#             */
-/*   Updated: 2021/12/13 18:42:55 by amaroni          ###   ########.fr       */
+/*   Updated: 2021/12/13 19:48:54 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include "libft/libft.h"
+# include <sys/wait.h>
 
 typedef struct s_list_pipex{
 	struct s_list_pipex	*next;
