@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 18:28:26 by amaroni           #+#    #+#             */
-/*   Updated: 2021/12/11 14:52:27 by amaroni          ###   ########.fr       */
+/*   Updated: 2021/12/13 18:42:55 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_list_pipex{
 
 typedef struct s_execve_date{
 	char *cmd;
-	char *tab[3];
+	char **tab;
 } t_execve_data;
 
 /* parser.c */
@@ -48,6 +48,6 @@ void			ft_addback_pipex_list(t_list_pipex **alist, t_list_pipex *new);
 
 /* execve */
 void	ft_init_execve_data(t_execve_data *data);
-t_execve_data	*ft_return_execve(char *cmd, char *cmd_args, char **envp);
+t_execve_data	*ft_return_execve(char *cmd, char **envp);
 void	ft_free_execve_data(t_execve_data *data);
 #endif

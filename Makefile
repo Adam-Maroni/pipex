@@ -6,7 +6,7 @@ CC = clang
 LIBFT_ARCHIVE = libft/libft.a
 HEADER = pipex.h
 NAME = pipex
-INPUT = inFile "cat" "wc -l" outFile
+INPUT = inFile "cat -e" "wc -l" outFile
 GDB_SCRIPT = gdbscripts/1.gdb
 VALGRIND_CHECKER = --leak-check=full
 
