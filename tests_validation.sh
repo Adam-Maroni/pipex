@@ -51,6 +51,8 @@ echo "----------Should return error----------"
 	error_testing "inFile cat 3 outFile"
 #CASE inFile 2 wc outFile
 	error_testing "inFile 2 wc outFile"
+#CASE 1 cat wc 4
+	error_testing "1 cat wc 4"
 echo "----------Functionnal testing----------"
 #CASE inFile cat wc outFile
 	functionnal_testing "inFile" "cat" "wc" "outFile"
