@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 14:51:22 by amaroni           #+#    #+#             */
-/*   Updated: 2021/12/15 16:54:32 by amaroni          ###   ########.fr       */
+/*   Updated: 2021/12/15 19:15:18 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,8 @@ int	ft_is_input_okay(int argc, char **argv, char **envp)
 	cmd = NULL;
 	cmd_full_path = NULL;
 	rt = 1;
-	if (argc != 5)
-		return (0);
-	if (access(argv[1], F_OK) == -1)
-		return (0);
-	if (access(argv[argc - 1], F_OK) == -1)
+	if (argc != 5 || access(argv[1], F_OK) == -1
+		|| access(argv[argc - 1], F_OK) == -1)
 		return (0);
 	while (i < argc - 1)
 	{
@@ -52,7 +49,7 @@ void	ft_run_child_1(int fd, char **argv, int pipefd[2], char **envp)
 		exit(1);
 	dup2(fd, STDIN_FILENO);
 	dup2(pipefd[1], STDOUT_FILENO);
-	data = ft_return_execve(argv[2], envp);
+	data = ft_return_execve(argv[1], envp);
 	execve(data->cmd, data->tab, envp);
 	close(fd);
 	close(pipefd[1]);
@@ -69,22 +66,20 @@ void	ft_run_child_2(int fd, char **argv, int pipefd[2], char **envp)
 		exit(1);
 	dup2(fd, STDOUT_FILENO);
 	dup2(pipefd[0], STDIN_FILENO);
-	data = ft_return_execve(argv[3], envp);
+	data = ft_return_execve(argv[4], envp);
 	execve(data->cmd, data->tab, envp);
 	close(fd);
 	close(pipefd[1]);
 	close(pipefd[0]);
 	ft_free_execve_data(data);
-
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	int pipefd[2];
-	int pid;
-	int pid2;
+	int	pipefd[2];
+	int	pid;
+	int	pid2;
 
-	//is input alright
 	if (!ft_is_input_okay(argc, argv, envp))
 	{
 		printf("Error\n");
