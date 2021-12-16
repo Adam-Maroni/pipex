@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 14:29:19 by amaroni           #+#    #+#             */
-/*   Updated: 2021/12/13 18:59:18 by amaroni          ###   ########.fr       */
+/*   Updated: 2021/12/16 09:08:55 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	ft_init_execve_data(t_execve_data *data)
 t_execve_data	*ft_return_execve(char *cmd_all, char **envp)
 {
 	t_execve_data	*rt;
-	char	*cmd;
-	char	*envar_path;
+	char			*cmd;
+	char			*envar_path;
 
 	if (!cmd_all || !envp)
 		return (NULL);

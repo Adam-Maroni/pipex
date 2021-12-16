@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 14:51:22 by amaroni           #+#    #+#             */
-/*   Updated: 2021/12/16 08:49:39 by amaroni          ###   ########.fr       */
+/*   Updated: 2021/12/16 09:07:48 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_is_input_okay(int argc, char **argv, char **envp)
 {
-	int	i;
-	int	rt;
+	int		i;
+	int		rt;
 	char	*cmd;
 	char	*cmd_full_path;
 
@@ -74,17 +74,12 @@ void	ft_run_child_2(int fd, char **argv, int pipefd[2], char **envp)
 	ft_free_execve_data(data);
 }
 
-int	main(int argc, char **argv, char **envp)
+int	ft_pipex(char **argv, char **envp)
 {
 	int	pipefd[2];
 	int	pid;
 	int	pid2;
 
-	if (ft_is_input_okay(argc, argv, envp) == 0)
-	{
-		printf("Error\n");
-		return (1);
-	}
 	if (pipe(pipefd) == -1)
 		return (2);
 	pid = fork();
@@ -104,4 +99,14 @@ int	main(int argc, char **argv, char **envp)
 	wait(&pid);
 	wait(&pid2);
 	return (0);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	if (ft_is_input_okay(argc, argv, envp) == 0)
+	{
+		printf("Error\n");
+		return (1);
+	}
+	return (ft_pipex(argv, envp));
 }
