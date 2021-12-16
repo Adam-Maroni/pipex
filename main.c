@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 14:51:22 by amaroni           #+#    #+#             */
-/*   Updated: 2021/12/16 09:44:18 by amaroni          ###   ########.fr       */
+/*   Updated: 2021/12/16 11:07:24 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ void	ft_run_child_1(int fd, char **argv, int pipefd[2], char **envp)
 	if (fd == -1)
 		exit(1);
 	dup2(fd, STDIN_FILENO);
+	close(fd);
 	dup2(pipefd[1], STDOUT_FILENO);
+	close(pipefd[0]);
 	data = ft_return_execve(argv[2], envp);
 	execve(data->cmd, data->tab, envp);
-	close(fd);
 	close(pipefd[1]);
-	close(pipefd[0]);
 	ft_free_execve_data(data);
 }
 
@@ -65,11 +65,10 @@ void	ft_run_child_2(int fd, char **argv, int pipefd[2], char **envp)
 	if (fd == -1)
 		exit(1);
 	dup2(fd, STDOUT_FILENO);
+	close(fd);
 	dup2(pipefd[0], STDIN_FILENO);
 	data = ft_return_execve(argv[3], envp);
 	execve(data->cmd, data->tab, envp);
-	close(fd);
-	close(pipefd[1]);
 	close(pipefd[0]);
 	ft_free_execve_data(data);
 }

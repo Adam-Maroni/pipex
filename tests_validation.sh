@@ -4,7 +4,7 @@ OUT='./pipex'
 
 #MEM_CHECK
 LOGFILE="logfile"
-VALGRIND_CHECKER="--leak-check=full --trace-children=yes"
+VALGRIND_CHECKER="-s --leak-check=full --show-leak-kinds=all --track-fds=yes -q"
 
 #GREP SETTINGS
 RED='ms=01;31'
@@ -23,17 +23,17 @@ function error_testing () {
 function functionnal_testing()
 {
 	cat /dev/null > $4
-	TMP_INFILE="tmp_$1"
-	TMP_OUTFILE="tmp_$4"
+	TMP_INFILE="tmp_infile"
+	TMP_OUTFILE="tmp_outfile"
 	touch $TMP_OUTFILE
 	cp $1 $TMP_INFILE
 	< $TMP_INFILE $2 | $3 > $TMP_OUTFILE
 	valgrind $VALGRIND_CHECKER --log-file=$LOGFILE $OUT $1 "$2" "$3" $4
-	export GREP_COLORS=$RED
-	grep -A 5 --color=always "LEAK SUMMARY" $LOGFILE
 	export GREP_COLORS=$GREEN
 	echo -n "$OUT $1 '$2' '$3' $4 >> "
 	diff -s $4 $TMP_OUTFILE | grep --color=always "identical"
+	export GREP_COLORS=$RED
+	grep -A 5 --color=always "LEAK SUMMARY" $LOGFILE
 	rm -f $TMP_INFILE $TMP_OUTFILE $LOGFILE
 }
 

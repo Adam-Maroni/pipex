@@ -8,8 +8,8 @@ HEADER = pipex.h
 NAME = pipex
 INPUT = inFile "cat -e" "wc -l" outFile
 GDB_SCRIPT = gdbscripts/1.gdb
-VALGRIND_CHECKER = --leak-check=full --trace-children=yes
-DEBUG_FLAGS = -g 
+VALGRIND_CHECKER = -s --leak-check=full --show-leak-kinds=all --track-fds=yes -q
+DEBUG_FLAGS = -g -ggdb
 
 all: $(NAME)
 

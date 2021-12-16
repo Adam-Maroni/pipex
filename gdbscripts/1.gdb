@@ -13,6 +13,9 @@ define plist
 		set $i = $i->next
 	end
 end
+set follow-fork-mode parent
+b main.c:91
+run
 set follow-fork-mode child
 b ft_run_child_2
-run
+c
