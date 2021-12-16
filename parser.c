@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 17:53:56 by amaroni           #+#    #+#             */
-/*   Updated: 2021/12/15 14:10:41 by amaroni          ###   ########.fr       */
+/*   Updated: 2021/12/16 08:17:55 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,11 @@ char	*ft_return_cmd_absolute_path(char *cmd, char *path)
 	while (absolute_path[i])
 	{
 		rt = ft_strcat_path_and_cmd(absolute_path[i], cmd);
-		if (access(rt, F_OK) == 0)
+		if (rt && access(rt, F_OK) == 0)
 			break ;
 		if (rt)
 			free(rt);
+		rt = NULL;
 		i++;
 	}
 	ft_free_2dtab((void **)absolute_path);
