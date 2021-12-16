@@ -1,5 +1,9 @@
 NAME = pipex
-SRC = $(wildcard *.c)
+SRC = \
+execve.c \
+extract.c \
+main.c \
+parser.c 
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = clang
@@ -35,3 +39,5 @@ mem_check: $(LIBFT_ARCHIVE) $(SRC) $(HEADER)
 	$(CC) -g  $(SRC) -o $(NAME) $(LIBFT_ARCHIVE)
 	valgrind $(VALGRIND_CHECKER) ./$(NAME) $(INPUT)
 	
+
+
