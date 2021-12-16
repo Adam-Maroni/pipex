@@ -19,7 +19,6 @@ $(LIBFT_ARCHIVE):
 $(NAME): $(LIBFT_ARCHIVE) $(OBJ) $(HEADER)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(LIBFT_ARCHIVE)
 
-
 clean:
 	rm -rf $(OBJ)
 
@@ -27,12 +26,6 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean $(NAME)
-
-mem_check: $(OBJ)
-	$(CC) $(CFLAGS) -fsanitize=address -g $(OBJ) -o $(NAME)
-
-valgrind: $(OBJ)
-	$(CC) $(CFLAGS) -g $(OBJ) -o $(NAME)
 
 debug: $(LIBFT_ARCHIVE) $(SRC) $(HEADER)
 	$(CC) $(DEBUG_FLAGS) $(SRC) -o $(NAME) $(LIBFT_ARCHIVE)

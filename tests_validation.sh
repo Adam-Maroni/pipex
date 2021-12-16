@@ -22,16 +22,17 @@ function error_testing () {
 #test_inFile cmd1 cmd2 test_outFile
 function functionnal_testing()
 {
+	cat /dev/null > $4
 	TMP_INFILE="tmp_$1"
 	TMP_OUTFILE="tmp_$4"
 	touch $TMP_OUTFILE
 	cp $1 $TMP_INFILE
 	< $TMP_INFILE $2 | $3 > $TMP_OUTFILE
-	valgrind $VALGRIND_CHECKER --log-file=$LOGFILE $OUT $1 $2 $3 $4
+	valgrind $VALGRIND_CHECKER --log-file=$LOGFILE $OUT $1 "$2" "$3" $4
 	export GREP_COLORS=$RED
 	grep -A 5 --color=always "LEAK SUMMARY" $LOGFILE
 	export GREP_COLORS=$GREEN
-	echo -n "$OUT $1 $2 $3 $4 >> "
+	echo -n "$OUT $1 '$2' '$3' $4 >> "
 	diff -s $4 $TMP_OUTFILE | grep --color=always "identical"
 	rm -f $TMP_INFILE $TMP_OUTFILE $LOGFILE
 }
@@ -57,4 +58,6 @@ echo "----------Should return error----------"
 echo "----------Functionnal testing----------"
 #CASE inFile cat wc outFile
 	functionnal_testing "inFile" "cat" "wc" "outFile"
+#CASE inFile cat -e wc -l outFile
+	functionnal_testing "inFile" "cat -e" "wc -l" "outFile"
 
