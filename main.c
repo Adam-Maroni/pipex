@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 14:51:22 by amaroni           #+#    #+#             */
-/*   Updated: 2021/12/16 09:07:48 by amaroni          ###   ########.fr       */
+/*   Updated: 2021/12/16 09:44:18 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,13 @@ int	ft_pipex(char **argv, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
+	int	rt;
+
 	if (ft_is_input_okay(argc, argv, envp) == 0)
-	{
+		rt = 1;
+	else
+		rt = ft_pipex(argv, envp);
+	if (rt != 0)
 		printf("Error\n");
-		return (1);
-	}
-	return (ft_pipex(argv, envp));
+	return (rt);
 }

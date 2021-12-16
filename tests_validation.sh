@@ -58,6 +58,7 @@ echo "----------Should return error----------"
 echo "----------Functionnal testing----------"
 #CASE inFile cat wc outFile
 	functionnal_testing "inFile" "cat" "wc" "outFile"
-#CASE inFile cat -e wc -l outFile
+#CASE inFile "cat -e" "wc -l" outFile
 	functionnal_testing "inFile" "cat -e" "wc -l" "outFile"
-
+#CASE inFile "grep a1" "wc -w" outFile
+	functionnal_testing "inFile" "grep a1" "wc -w" "outFile"
