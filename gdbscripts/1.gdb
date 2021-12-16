@@ -1,7 +1,7 @@
 define pstrtab
 	set $i = 0
 	while $arg0[$i] != (void*)0
-		print $_as_string($arg0[$i])
+		print $arg0[$i]
 		set $i = $i + 1
 	end
 end
@@ -13,5 +13,6 @@ define plist
 		set $i = $i->next
 	end
 end
-b main
+set follow-fork-mode child
+b ft_run_child_2
 run

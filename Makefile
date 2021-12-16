@@ -8,8 +8,8 @@ HEADER = pipex.h
 NAME = pipex
 INPUT = inFile "cat -e" "wc -l" outFile
 GDB_SCRIPT = gdbscripts/1.gdb
-VALGRIND_CHECKER = --leak-check=full
-
+VALGRIND_CHECKER = --leak-check=full --trace-children=yes
+DEBUG_FLAGS = -g 
 
 all: $(NAME)
 
@@ -35,7 +35,7 @@ valgrind: $(OBJ)
 	$(CC) $(CFLAGS) -g $(OBJ) -o $(NAME)
 
 debug: $(LIBFT_ARCHIVE) $(SRC) $(HEADER)
-	$(CC) -g  $(SRC) -o $(NAME) $(LIBFT_ARCHIVE)
+	$(CC) $(DEBUG_FLAGS) $(SRC) -o $(NAME) $(LIBFT_ARCHIVE)
 	gdb -x $(GDB_SCRIPT) --args ./$(NAME) $(INPUT)
 
 mem_check: $(LIBFT_ARCHIVE) $(SRC) $(HEADER)
