@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 14:51:22 by amaroni           #+#    #+#             */
-/*   Updated: 2021/12/16 11:33:44 by amaroni          ###   ########.fr       */
+/*   Updated: 2021/12/17 11:32:37 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ int	ft_is_input_okay(int argc, char **argv, char **envp)
 	cmd = NULL;
 	cmd_full_path = NULL;
 	rt = 1;
-	if (argc != 5 || access(argv[1], F_OK) == -1
-		|| access(argv[argc - 1], F_OK) == -1)
+	if (argc != 5 || access(argv[1], F_OK) == -1)
 		return (0);
 	while (i < argc - 1)
 	{
@@ -85,14 +84,14 @@ int	ft_pipex(char **argv, char **envp)
 	if (pid == -1)
 		return (3);
 	if (pid == 0)
-		ft_run_child_1(open(argv[1], O_RDWR | O_CREAT, 0777),
+		ft_run_child_1(open(argv[1], O_CREAT | O_RDWR, 0777),
 			argv, pipefd, envp);
 	close(pipefd[1]);
 	pid2 = fork();
 	if (pid2 == -1)
 		return (5);
 	if (pid2 == 0)
-		ft_run_child_2(open(argv[4], O_RDWR | O_CREAT, 0777),
+		ft_run_child_2(open(argv[4], O_CREAT | O_RDWR, 0777),
 			argv, pipefd, envp);
 	close(pipefd[0]);
 	wait(&pid);
