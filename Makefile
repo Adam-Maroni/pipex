@@ -31,7 +31,6 @@ fclean: clean
 
 re: fclean $(NAME)
 
-INPUT = "assets/deepthought.txt" "cat" "hostname" "outs/test-01.txt"
 debug: $(LIBFT_ARCHIVE) $(SRC) $(HEADER)
 	$(CC) $(DEBUG_FLAGS) $(SRC) -o $(NAME) $(LIBFT_ARCHIVE)
 	gdb -x $(GDB_SCRIPT) --args ./$(NAME) $(INPUT)

@@ -41,7 +41,7 @@ int	ft_is_input_okay(int argc, char **argv, char **envp)
 
 void	ft_run_child_1(int fd, char **argv, int pipefd[2], char **envp)
 {
-	t_execve_data	*data;
+	t_execve	*data;
 
 	data = NULL;
 	if (fd == -1)
@@ -53,12 +53,12 @@ void	ft_run_child_1(int fd, char **argv, int pipefd[2], char **envp)
 	data = ft_return_execve(argv[2], envp);
 	execve(data->cmd, data->tab, envp);
 	close(pipefd[1]);
-	ft_free_execve_data(data);
+	ft_free_execve(data);
 }
 
 void	ft_run_child_2(int fd, char **argv, int pipefd[2], char **envp)
 {
-	t_execve_data	*data;
+	t_execve	*data;
 
 	data = NULL;
 	if (fd == -1)
@@ -69,7 +69,7 @@ void	ft_run_child_2(int fd, char **argv, int pipefd[2], char **envp)
 	data = ft_return_execve(argv[3], envp);
 	execve(data->cmd, data->tab, envp);
 	close(pipefd[0]);
-	ft_free_execve_data(data);
+	ft_free_execve(data);
 }
 
 int	ft_pipex(char **argv, char **envp)

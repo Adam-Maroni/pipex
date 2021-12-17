@@ -62,3 +62,5 @@ echo "----------Functionnal testing----------"
 	functionnal_testing "inFile" "cat -e" "wc -l" "outFile"
 #CASE inFile "grep a1" "wc -w" outFile
 	functionnal_testing "inFile" "grep a1" "wc -w" "outFile"
+#CASE inFile "grep a1" "hostname" outFile
+	functionnal_testing "inFile" "grep a1" "hostname" "outFile"
