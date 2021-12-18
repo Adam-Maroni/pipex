@@ -34,18 +34,23 @@ function error_testing () {
 	cat /dev/null > $4
 	ERROR_MESSAGE_EXPECTED_FILE="error_expected"
 	ERROR_MESSAGE_OBTAINED_FILE="error_obtained"
-	2>$ERROR_MESSAGE_EXPECTED_FILE 	< $1 $2 | 2>>$ERROR_MESSAGE_EXPECTED_FILE $3 > $4
+	2>$ERROR_MESSAGE_EXPECTED_FILE < $1 $2 | 2>>$ERROR_MESSAGE_EXPECTED_FILE $3 > $4
 	ERROR_CODE_EXPECTED=$?
 	echo "$OUT $1 '$2' '$3' $4"
-	1>$ERROR_MESSAGE_OBTAINED_FILE valgrind $VALGRIND_CHECKER --log-file=$LOGFILE $OUT $1 "$2" "$3" $4
+	2>$ERROR_MESSAGE_OBTAINED_FILE valgrind $VALGRIND_CHECKER --log-file=$LOGFILE $OUT $1 "$2" "$3" $4
 	ERROR_CODE_OBTAINED=$?
-	diff -s $ERROR_MESSAGE_OBTAINED_FILE $ERROR_MESSAGE_EXPECTED_FILE > /dev/null
+	sed -i "s/.*:.*: \(.*:.*\)$/\1/" $ERROR_MESSAGE_EXPECTED_FILE
+	diff $ERROR_MESSAGE_EXPECTED_FILE $ERROR_MESSAGE_OBTAINED_FILE > /dev/null
 	DIFF_RETURNED_CODE=$?
 	if [ $DIFF_RETURNED_CODE = 0 ]
 	then
 		printf $GREEN"Error message expected and obtained are identical.\n"$RESET
 	else
 		printf $RED"Error message expected and obtained are not identical.\n"$RESET
+		echo "expected :"
+		cat -e $ERROR_MESSAGE_EXPECTED_FILE
+		echo "obtained :"
+		cat -e $ERROR_MESSAGE_OBTAINED_FILE
 	fi
 	if [ $ERROR_CODE_EXPECTED = $ERROR_CODE_OBTAINED ]
 	then
@@ -91,8 +96,6 @@ function functionnal_testing()
 
 make -s
 echo "----------Should return error----------"
-#CASE 1 2 3 4 5
-	error_testing "1" "2" "3" "4" "5"
 #CASE 1 2 3 4
 	error_testing "1" "2" "3" "4"
 #CASE inFile 2 3 4

@@ -6,7 +6,7 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 18:28:26 by amaroni           #+#    #+#             */
-/*   Updated: 2021/12/17 12:59:08 by amaroni          ###   ########.fr       */
+/*   Updated: 2021/12/18 15:47:21 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,11 @@ char		*ft_extract_cmd_args(char *arg);
 void		ft_init_execve(t_execve *data);
 void		ft_free_execve(t_execve *data);
 t_execve	*ft_return_execve(char *cmd_all, char **envp);
+
+/* main.c */
+void		ft_print_err_msg(char **argv, int udef_err_code);
+void		ft_run_child_1(int fd, char **argv, int pipefd[2], char **envp);
+void		ft_run_child_2(int fd, char **argv, int pipefd[2], char **envp);
+int			ft_pipex(char **argv, char **envp);
+int			main(int argc, char **argv, char **envp);
 #endif
