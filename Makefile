@@ -35,6 +35,7 @@ debug: $(LIBFT_ARCHIVE) $(SRC) $(HEADER)
 	$(CC) $(DEBUG_FLAGS) $(SRC) -o $(NAME) $(LIBFT_ARCHIVE)
 	gdb -x $(GDB_SCRIPT) --args ./$(NAME) $(INPUT)
 
+INPUT = output.txt cat cazt out
 mem_check: $(LIBFT_ARCHIVE) $(SRC) $(HEADER)
 	$(CC) -g  $(SRC) -o $(NAME) $(LIBFT_ARCHIVE)
 	valgrind $(VALGRIND_CHECKER) ./$(NAME) $(INPUT)

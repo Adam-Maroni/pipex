@@ -6,32 +6,11 @@
 /*   By: amaroni <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 14:51:22 by amaroni           #+#    #+#             */
-/*   Updated: 2021/12/18 15:50:16 by amaroni          ###   ########.fr       */
+/*   Updated: 2021/12/20 18:32:37 by amaroni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-/*
- * This function print particular message.
- * udef_err_code = user defined error code.
- * This code link an interger to an error message.
- * 1 = Not the right number of arguments.
- * 2 = file1 not found
- */
-void	ft_print_err_msg(char **argv, int udef_err_code)
-{
-	if (udef_err_code == 0)
-		fprintf(stderr, "Error\n");
-	else if (udef_err_code == 1)
-		fprintf(stderr, "%s: No such file or directory\n", argv[1]);
-	else if (udef_err_code == 2)
-		fprintf(stderr, "%s: command not found\n", argv[2]);
-	else if (udef_err_code == 3)
-		fprintf(stderr, "%s: command not found\n", argv[3]);
-	else if (udef_err_code == 4)
-		fprintf(stderr, "%s: command not found\n", argv[4]);
-}
 
 void	ft_run_child_1(int fd, char **argv, int pipefd[2], char **envp)
 {
@@ -40,7 +19,7 @@ void	ft_run_child_1(int fd, char **argv, int pipefd[2], char **envp)
 	data = NULL;
 	if (fd == -1)
 	{
-		ft_print_err_msg(argv, 1);
+		perror(argv[1]);
 		exit(127);
 	}
 	dup2(fd, STDIN_FILENO);
@@ -48,11 +27,12 @@ void	ft_run_child_1(int fd, char **argv, int pipefd[2], char **envp)
 	dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[0]);
 	data = ft_return_execve(argv[2], envp);
-	if (execve(data->cmd, data->tab, envp) == -1)
+	if (!data || !data->cmd || !data->tab
+		|| execve(data->cmd, data->tab, envp) == -1)
 	{
 		close(pipefd[1]);
 		ft_free_execve(data);
-		ft_print_err_msg(argv, 2);
+		fprintf(stderr, "%s: command not found\n", argv[2]);
 		exit(127);
 	}
 	close(pipefd[1]);
@@ -66,7 +46,7 @@ void	ft_run_child_2(int fd, char **argv, int pipefd[2], char **envp)
 	data = NULL;
 	if (fd == -1)
 	{
-		ft_print_err_msg(argv, 2);
+		perror(argv[4]);
 		close(pipefd[0]);
 		ft_free_execve(data);
 		exit(127);
@@ -75,11 +55,12 @@ void	ft_run_child_2(int fd, char **argv, int pipefd[2], char **envp)
 	close(fd);
 	dup2(pipefd[0], STDIN_FILENO);
 	data = ft_return_execve(argv[3], envp);
-	if (execve(data->cmd, data->tab, envp) == -1)
+	if (!data || !data->cmd || !data->tab
+		|| execve(data->cmd, data->tab, envp) == -1)
 	{
 		close(pipefd[0]);
 		ft_free_execve(data);
-		ft_print_err_msg(argv, 3);
+		fprintf(stderr, "%s: command not found\n", argv[3]);
 		exit(127);
 	}
 	close(pipefd[0]);
@@ -117,7 +98,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	if (argc != 5)
 	{
-		ft_print_err_msg(argv, 0);
+		printf("Error, not right number of arguments\n");
 		return (127);
 	}
 	else
